@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+    <changeSet id="db.creation" author="bds">
+        <sql>
+            create table USERS
+            (
+            ID       INTEGER      AUTO_INCREMENT(1,1) PRIMARY KEY,
+            LOGIN    VARCHAR(50)  not null
+            constraint USERS_LOGIN_UINDEX unique,
+            PASSWORD VARCHAR(100) not null
+            );
+            comment on table USERS is 'Пользователи чата';
+
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (1, 'user 1', '111');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (2, 'user 2', '222');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (3, 'user 3', '333');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (4, 'user 4', '444');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (5, 'user 5', '555');
+
+            create table MESSAGES
+            (
+            ID      INTEGER      AUTO_INCREMENT(1,1) PRIMARY KEY,
+            USER_ID INTEGER not null,
+            MESSAGE VARCHAR(100) not null
+            )
+            ;
+            comment on table MESSAGES is 'Сообщения пользователей'
+            ;
+
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (7, 1, 'Здравствуйте');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (8, 2, 'Привет');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (9, 3, 'Здарова');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (10, 1, 'Как у вас всех дела ?');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (11, 4, 'Салют!');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (12, 4, 'Нормально, потянет :)');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (13, 2, 'Хорошо');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (14, 3, 'Так себе. Бывало и лучше');
+            INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (15, 1, 'user 3. А чё такое ?');
+
+        </sql>
+    </changeSet>
+</databaseChangeLog>
