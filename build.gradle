@@ -1,0 +1,43 @@
+subprojects {
+    apply plugin: 'java'
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        compile group: 'org.springframework', name: 'spring-context', version: '4.3.7.RELEASE'
+    }
+}
+
+// для Spring Boot
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
+    }
+}
+
+project(':chat') {
+    apply plugin: 'org.springframework.boot'
+    dependencies {
+        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+        // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+        compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+        // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+        compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.2'
+        // tag::security[]
+        compile("org.springframework.boot:spring-boot-starter-security")
+        // end::security[]
+        // https://mvnrepository.com/artifact/org.springframework/spring-jdbc
+        compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.8.RELEASE'
+        compile group: 'org.liquibase', name: 'liquibase-core', version: '3.5.3'
+        compile group: 'com.h2database', name: 'h2', version: '1.4.195'
+
+    }
+    jar {
+        baseName = 'security-boot'
+        version =  '0.1.0'
+    }
+}
