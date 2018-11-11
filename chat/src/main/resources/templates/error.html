@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="utf-8" />
+    <title>Ошибка - Чат</title></head>
+<body>
+<h1 th:inline="text">Ошибка прав доступа либо страница не существует!</h1>
+<p> Проверьте, имеет ли пользователь доступ к странице и существует ли страница вообще</p>
+<p></p>
+<input type="button" onclick="history.back();" value="Назад"/>
+<p></p>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Выйти"/>
+</form>
+</body>
+</html>

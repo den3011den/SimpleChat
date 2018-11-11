@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Чат - регистрация</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+<h1>Чат - регистрация</h1>
+
+<div th:if="${errorMessage!=null}"
+     style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>
+
+<form th:action="@{/registration}" method="post">
+    <div class="group">
+        <input type="text" placeholder="Логин" maxlength="50" autofocus required><span class="highlight"></span><span class="bar"></span>
+        <div style="text-align: center;">
+            <label>Логин</label>
+        </div>
+    </div>
+    <div class="group">
+        <input type="password" placeholder="Пароль" maxlength="50"  required><span class="highlight"></span><span class="bar"></span>
+        <div style="text-align: center;">
+            <label>Пароль</label>
+        </div>
+    </div>
+    <div class="buttongroup">
+        <div style="text-align: center;">
+            <button type="button" class="button buttonBlue">Отмена
+                <div class="ripples buttonRipples">
+                    <span class="ripplesCircle"></span></div>
+                <button type="submit" class="button buttonWhite">OK
+                    <div class="ripples buttonRipples">
+                        <span class="ripplesCircle"></span></div>
+                </button>
+            </button>
+        </div>
+    </div>
+</form>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="js/login.js"></script>
+</body>
+
+</html>
