@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Чат</title>
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/home.css"/>
 </head>
 <body>
 <h1>Чат</h1>
 <form>
     <div class="buttongroup">
         <div style="text-align: center;">
-            <button type="button" class="button buttonBlue">Вход
+            <button type="button" class="button buttonBlue" onclick="window.location.href='/login'">Вход
                 <div class="ripples buttonRipples">
                     <span class="ripplesCircle"></span></div>
-                <button type="button" class="button buttonWhite">Регистрация
+                <button type="button" class="button buttonWhite" onclick="window.location.href='/registration'">Регистрация
                     <div class="ripples buttonRipples">
                         <span class="ripplesCircle"></span></div>
                 </button>

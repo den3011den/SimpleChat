@@ -60,6 +60,18 @@ label {
     top: -50px;
 }
 
+.error-label {
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    pointer-events: none;
+    text-align:center;
+    top: 5px;
+    padding: 0px 45px;
+    color: #ff2025;
+}
+
+
 
 /* active */
 

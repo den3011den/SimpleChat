@@ -4,14 +4,37 @@
 <head>
     <meta charset="utf-8" />
     <title>Ошибка - Чат</title></head>
+    <link rel="stylesheet" href="css/home.css"/>
 <body>
 <h1 th:inline="text">Ошибка прав доступа либо страница не существует!</h1>
-<p> Проверьте, имеет ли пользователь доступ к странице и существует ли страница вообще</p>
-<p></p>
-<input type="button" onclick="history.back();" value="Назад"/>
-<p></p>
 <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Выйти"/>
+
+    <div class="buttongroup">
+        <div style="text-align: center;">
+            <button type="button" class="button buttonBlue" onclick="history.back();">Назад
+                <div class="ripples buttonRipples">
+                    <span class="ripplesCircle"></span></div>
+                <button type="submit" class="button buttonWhite">Выйти
+                    <div class="ripples buttonRipples">
+                        <span class="ripplesCircle"></span></div>
+                </button>
+            </button>
+        </div>
+    </div>
+
+
+  <!--  <div class="buttongroup">
+        <div style="text-align: center;">
+
+
+
+    <input type="submit" class="button buttonWhite" value="Выйти"/>
+    <input type="button"  class="button buttonBlue" onclick="history.back();" value="Назад"/>
+        </div>
+    </div>
+    -->
 </form>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="js/login.js"></script>
 </body>
 </html>

@@ -1,27 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Чат - вход</title>
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/login.css"/>
 </head>
 <body>
 
 <h1>Чат - вход</h1>
 
-<div th:if="${errorMessage!=null}"
-     style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>
+
+<!--<div th:if="${errorMessage!=null}"
+     style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>   -->
 
 <form th:action="@{/login}" method="post">
+
+    <div class="error-label" th:if="${param.error}">
+        Неверные логин или пароль.
+    </div>
+    <div class="error-label" th:if="${param.logout}">
+        Сеанс завершен, Вы вышли из системы.
+    </div>
+
     <div class="group">
-        <input type="text" placeholder="Логин" maxlength="50" autofocus required><span class="highlight"></span><span class="bar"></span>
+        <input type="text" name="username" placeholder="Логин" maxlength="50"  required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
         <div style="text-align: center;">
             <label>Логин</label>
         </div>
     </div>
     <div class="group">
-        <input type="password" placeholder="Пароль" maxlength="50"  required><span class="highlight"></span><span class="bar"></span>
+        <input type="password" placeholder="Пароль" maxlength="50" required="true"/><span class="highlight"></span><span class="bar"></span>
         <div style="text-align: center;">
             <label>Пароль</label>
         </div>
