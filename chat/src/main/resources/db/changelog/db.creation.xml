@@ -39,6 +39,38 @@
             INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (14, 3, 'Так себе. Бывало и лучше');
             INSERT INTO PUBLIC.MESSAGES (ID, USER_ID, MESSAGE) VALUES (15, 1, 'user 3. А чё такое ?');
 
+            create table ROLES
+            (
+            ID INTEGER AUTO_INCREMENT(1,1) primary key,
+            NAME VARCHAR(50) not null
+            constraint ROLES_NAME_UINDEX
+            unique
+            )
+            ;
+
+            comment on table ROLES is 'Справочник ролей';
+
+            INSERT INTO PUBLIC.ROLES (ID, NAME) VALUES (1, 'CLIENT');
+
+
+            create table USERROLE
+            (
+            ID INTEGER AUTO_INCREMENT(1,1)
+            primary key,
+            USER_ID INTEGER not null,
+            ROLE_ID INTEGER not null
+            )
+            ;
+
+            comment on table USERROLE is 'Роли пользователей'
+            ;
+
+            INSERT INTO PUBLIC.USERROLE (ID, USER_ID, ROLE_ID) VALUES (1, 1, 1);
+            INSERT INTO PUBLIC.USERROLE (ID, USER_ID, ROLE_ID) VALUES (2, 2, 1);
+            INSERT INTO PUBLIC.USERROLE (ID, USER_ID, ROLE_ID) VALUES (3, 3, 1);
+            INSERT INTO PUBLIC.USERROLE (ID, USER_ID, ROLE_ID) VALUES (4, 4, 1);
+            INSERT INTO PUBLIC.USERROLE (ID, USER_ID, ROLE_ID) VALUES (5, 5, 1);
+
         </sql>
     </changeSet>
 </databaseChangeLog>
