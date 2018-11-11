@@ -1,12 +1,12 @@
 package bds.dao;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import static javax.persistence.GenerationType.AUTO;
 
+@Entity
+@Table(name="messages")
 public class MessagesRecord {
 
     @Id

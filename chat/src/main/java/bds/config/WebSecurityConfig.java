@@ -21,7 +21,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http
                     .authorizeRequests()
                     .antMatchers("/chat").access("hasRole('CLIENT')")
-                    .antMatchers("/css", "/css/**","/img", "/img/**", "/", "/registration").permitAll()
+                    .antMatchers( "/", "/registration").permitAll()
+                    .antMatchers("/resources/**","/css", "/css/**","/img", "/img/**").permitAll()
                     .antMatchers("/error").authenticated()
                     .and()
                     .formLogin()
@@ -40,10 +41,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth
             .jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                    "select login, password from users where login = ?");
-//                .authoritiesByUsernameQuery(
-//                    "select usertable.name as username, roletable.name as role from usertable, roletable where usertable.role=roletable.id and usertable.name = ?");
+/*                .usersByUsernameQuery(
+                        "select login as username, password, 'true' as enabled from users where login = ?")
+                .authoritiesByUsernameQuery(
+                    "select login as username, password, 'true' as enabled from users where login = ?");*/
+            .usersByUsernameQuery(
+                    "select login as principal, password as credentials, true from users where login = ?")
+            .authoritiesByUsernameQuery("select users.login as principal, roles.name as role from users, roles, userrole where users.id=userrole.user_id and" +
+                    " userrole.role_id=roles.id and users.login = ?");
+                /*.rolePrefix("ROLE_");*/
+        System.out.println("");
 
         }
 
