@@ -18,19 +18,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
             http
                     .authorizeRequests()
-                    .antMatchers("/chat").access("hasRole('CLIENT')")
-                    .antMatchers( "/", "/registration").permitAll()
+                    .antMatchers("/chat").access("hasRole('ROLE_CLIENT')")
+                    .antMatchers( "/", "/registration", "/test").permitAll()
                     .antMatchers("/resources/**","/css", "/css/**","/img", "/img/**").permitAll()
                     .antMatchers("/error").authenticated()
                     .and()
                     .formLogin()
                     .loginPage("/login")
+                    .defaultSuccessUrl("/chat", true)
                     .permitAll()
                     .and()
                     .logout()
                     .permitAll();
+
         }
 
     @Autowired
@@ -38,21 +41,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
         auth
             .jdbcAuthentication().dataSource(dataSource)
-/*                .usersByUsernameQuery(
-                        "select login as username, password, 'true' as enabled from users where login = ?")
-                .authoritiesByUsernameQuery(
-                    "select login as username, password, 'true' as enabled from users where login = ?");*/
             .usersByUsernameQuery(
-                    "select login as principal, password as credentials, true from users where login = ?")
-            .authoritiesByUsernameQuery("select users.login as principal, roles.name as role from users, roles, userrole where users.id=userrole.user_id and" +
-                    " userrole.role_id=roles.id and users.login = ?");
-                /*.rolePrefix("ROLE_");*/
-        System.out.println("");
-
+                    "select TRIM(login) as username, password as password, 'true' as enabled "
+                            + "from users where login = ?")
+            .authoritiesByUsernameQuery("select TRIM(users.login) as username, UPPER(TRIM(roles.name)) as role from users, roles, userrole where users.login = ? and " +
+                    "userrole.user_id = users.id and" +
+                    " userrole.role_id=roles.id")
+            .rolePrefix("ROLE_");
         }
+
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("user 1").password("111").roles("CLIENT");
+//    }
 
     }
 

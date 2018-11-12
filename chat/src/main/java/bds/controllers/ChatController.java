@@ -12,9 +12,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -86,4 +94,19 @@ public class ChatController {
         return messagesRepository.save(messagesRecord);
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String viewAskTrackPage(Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Set<String> roles = authentication.getAuthorities().stream()
+                .map(r -> r.getAuthority()).collect(Collectors.toSet());
+
+        Iterator<String> iterator = roles.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.toString() + " " + iterator.next());
+        }
+
+        return "/error";
+    }
 }
