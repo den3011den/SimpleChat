@@ -3,6 +3,8 @@ package bds.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,9 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .jdbcAuthentication().dataSource(dataSource)
+            .passwordEncoder(passwordEncoder())
             .usersByUsernameQuery(
                     "select TRIM(login) as username, password as password, 'true' as enabled "
                             + "from users where login = ?")
@@ -51,6 +57,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     " userrole.role_id=roles.id")
             .rolePrefix("ROLE_");
         }
+
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder;
+    }
+
+
 
 
 //    @Autowired
