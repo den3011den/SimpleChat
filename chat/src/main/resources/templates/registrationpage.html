@@ -13,15 +13,15 @@
 <div th:if="${errorMessage!=null}"
      style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>
 
-<form th:action="@{/registration}" method="post">
+<form th:action="@{/register}" th:object="${registrationForm}" method="post">
     <div class="group">
-        <input type="text" placeholder="Логин" maxlength="50" required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
+        <input type="text" placeholder="Логин" maxlength="50" name="username" th:field="*{userName}" required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
         <div style="text-align: center;">
             <label>Логин</label>
         </div>
     </div>
     <div class="group">
-        <input type="password" placeholder="Пароль" maxlength="50" required="true"/><span class="highlight"></span><span class="bar"></span>
+        <input type="password" name="password" placeholder="Пароль" maxlength="50" th:field="*{password}" required="true"/><span class="highlight"></span><span class="bar"></span>
         <div style="text-align: center;">
             <label>Пароль</label>
         </div>

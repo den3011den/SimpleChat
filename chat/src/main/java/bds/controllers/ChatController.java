@@ -1,9 +1,14 @@
 package bds.controllers;
 
+import bds.RegistrationForm;
 import bds.dao.MessagesRecord;
+import bds.dao.RolesRecord;
 import bds.dao.UsersRecord;
 import bds.dao.repo.MessagesRepository;
 import bds.dao.repo.UsersRepository;
+import bds.dao.repo.RolesRepository;
+import bds.services.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,27 +19,32 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 
-@RestController
+@Controller
 @PropertySource("classpath:/chat.properties")
 @EnableJpaRepositories("bds.dao")
-@EntityScan(basePackageClasses = {bds.dao.MessagesRecord.class, bds.dao.UsersRecord.class})
+@EntityScan(basePackageClasses = {bds.dao.MessagesRecord.class, bds.dao.UsersRecord.class, bds.dao.RolesRecord.class, bds.dao.UserRoleRecord.class})
 public class ChatController {
 
     private static final Logger log = LoggerFactory.getLogger(ChatController.class);
 
     static private List<UsersRecord> allUsers;
     static private List<MessagesRecord> allMessages;
+    static private List<RolesRecord> allRoles;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {
@@ -49,12 +59,20 @@ public class ChatController {
     @Autowired
     MessagesRepository messagesRepository;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @Autowired
+    RolesRepository rolesRepository;
+
+    @Autowired
+    UserService userService;
+
+
     public void deleteUsersRecord(UsersRecord usersRecord) {
         usersRepository.delete(usersRecord);
     }
 
-    public void updateUsersRecord(UsersRecord userRecord) {
-        usersRepository.save(userRecord);
+    public void updateUsersRecord(UsersRecord usersRecord) {
+        usersRepository.save(usersRecord);
     }
 
     public void readUsersRecordAll() {
@@ -94,8 +112,50 @@ public class ChatController {
         return messagesRepository.save(messagesRecord);
     }
 
+
+    public void deleteRolesRecord(RolesRecord rolesRecord) {
+        rolesRepository.delete(rolesRecord);
+    }
+
+    public void updateRolesRecord(RolesRecord rolesRecord) {
+        rolesRepository.save(rolesRecord);
+    }
+
+    public void readRolesRecordAll() {
+        allRoles = (List<RolesRecord>) rolesRepository.findAll();
+
+        if (allRoles.size() == 0) {
+            log.info("NO RECORDS");
+        }
+
+        allRoles.stream().forEach(rolerecord -> log.info(rolerecord.toString()));
+    }
+
+    public RolesRecord createRolesRecord(RolesRecord rolesRecord) {
+        return rolesRepository.save(rolesRecord);
+    }
+
+
+
+    private UsersRecord createUserAccount(@Valid RegistrationForm registrationForm, BindingResult result) {
+        UsersRecord registered = null;
+        try{
+            registered = userService.registerNewUserAccount(registrationForm);
+//        }catch (LoginExistsException e) {
+//            return null;
+//        }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return registered;
+    }
+
+
+
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String viewAskTrackPage(Model model) {
+    public String viewTestPage(Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -109,4 +169,26 @@ public class ChatController {
 
         return "/error";
     }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public String viewRegistrationPage(Model model) {
+
+        RegistrationForm registrationForm = new RegistrationForm();
+
+        model.addAttribute("registrationForm", registrationForm);
+
+        return "/registrationpage";
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public String registrationAction(Model model, RegistrationForm registrationForm) {
+
+        userService.registerNewUserAccount(registrationForm);
+
+        String infoMessage = "Попробуйте войти";
+
+        return "/login";
+    }
+
+
 }
