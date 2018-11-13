@@ -11,9 +11,6 @@
 <h1>Чат - вход</h1>
 
 
-<!--<div th:if="${errorMessage!=null}"
-     style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>   -->
-
 <form th:action="@{/login}" method="post">
 
     <div class="error-label" th:if="${param.error}">
@@ -22,12 +19,12 @@
     <div class="error-label" th:if="${param.logout}">
         Сеанс завершен, Вы вышли из системы.
     </div>
-    <!--    <div class="error-label" th:if="${infoMessage}">
-            Попробуйте войти
-        </div> -->
+
+    <div class="error-label nice-label" th:if="${infoMessage!=null}"
+          th:utext="${infoMessage}">..</div>
 
         <div class="group">
-            <input type="text" name="username" placeholder="Логин" maxlength="50"  required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
+            <input type="text" name="username" th:value="*{username}" placeholder="Логин" maxlength="50" required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
             <div style="text-align: center;">
                 <label>Логин</label>
             </div>
@@ -40,7 +37,7 @@
         </div>
         <div class="buttongroup">
             <div style="text-align: center;">
-                <button type="button" class="button buttonBlue">Отмена
+                <button type="button" class="button buttonBlue" onclick="window.location.href='/'">Отмена
                     <div class="ripples buttonRipples">
                         <span class="ripplesCircle"></span></div>
                     <button type="submit" class="button buttonWhite">OK

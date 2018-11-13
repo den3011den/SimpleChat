@@ -12,8 +12,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService implements IUserService {
+
+    static private List<UsersRecord> allUsers;
 
     @Autowired
     private UsersRepository usersRepository;
@@ -23,15 +27,11 @@ public class UserService implements IUserService {
 
 
     @Override
-    public UsersRecord registerNewUserAccount(RegistrationForm registrationForm)
-            /*throws LoginExistsException*/
-    {
-
-    /*    if(loginExist(accountDto.getLogin())){
-            throw new LoginExistsException(
-                    "There is an account with that login:" + accountDto.getLogin());
+    public UsersRecord registerNewUserAccount(RegistrationForm registrationForm) throws LoginExistsException {
+        if(loginExists(registrationForm.getUserName())) {
+           throw new LoginExistsException("Уже есть логин: " + registrationForm.getUserName());
         }
-    */
+
         UsersRecord usersRecord = new UsersRecord();
 
         usersRecord.setLogin(registrationForm.getUserName());
@@ -48,13 +48,16 @@ public class UserService implements IUserService {
         return savedRecord;
     }
 
+    public boolean loginExists(String login) {
 
+        allUsers = (List<UsersRecord>) usersRepository.findAll();
 
-//    private boolean loginExist(String login){
-//        UserEntity userEntity = userRepo.getByLogin(login);
-//        if(userEntity != null) {
-//            return true;
-//        }
-//        return false;
-//    }
+        if (allUsers.size() == 0) {
+            return false;
+        }
+
+        boolean loginContains = allUsers.contains(new UsersRecord(login));
+        return loginContains;
+    }
+
 }

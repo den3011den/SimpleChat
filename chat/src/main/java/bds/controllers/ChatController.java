@@ -7,7 +7,7 @@ import bds.dao.UsersRecord;
 import bds.dao.repo.MessagesRepository;
 import bds.dao.repo.UsersRepository;
 import bds.dao.repo.RolesRepository;
-import bds.services.UserService;
+import bds.services.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -141,12 +141,7 @@ public class ChatController {
         UsersRecord registered = null;
         try{
             registered = userService.registerNewUserAccount(registrationForm);
-//        }catch (LoginExistsException e) {
-//            return null;
-//        }
-
-        }catch (Exception e) {
-            e.printStackTrace();
+        }catch (LoginExistsException e) {
             return null;
         }
         return registered;
@@ -183,12 +178,24 @@ public class ChatController {
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registrationAction(Model model, RegistrationForm registrationForm) {
 
-        userService.registerNewUserAccount(registrationForm);
+        try {
+            userService.registerNewUserAccount(registrationForm);
+        } catch (LoginExistsException e) {
 
-        String infoMessage = "Попробуйте войти";
+            String infoMessage = "Пользователь с таким логином уже есть";
+
+            model.addAttribute("registrationForm", registrationForm);
+            model.addAttribute("infoMessage", infoMessage);
+            return "/registrationpage";
+
+        }
+
+        String infoMessage = "Зарегистрирован. Попробуйте войти";
+
+        model.addAttribute("infoMessage", infoMessage);
+        model.addAttribute("username", registrationForm.getUserName());
 
         return "/login";
     }
-
 
 }

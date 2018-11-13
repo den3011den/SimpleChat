@@ -10,10 +10,11 @@
 
 <h1>Чат - регистрация</h1>
 
-<div th:if="${errorMessage!=null}"
-     style="color:red;font-style:italic" th:utext="${errorMessage}">..</div>
-
 <form th:action="@{/register}" th:object="${registrationForm}" method="post">
+
+    <div class="error-label" th:if="${infoMessage!=null}"
+         th:utext="${infoMessage}">..</div>
+
     <div class="group">
         <input type="text" placeholder="Логин" maxlength="50" name="username" th:field="*{userName}" required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
         <div style="text-align: center;">
@@ -28,7 +29,7 @@
     </div>
     <div class="buttongroup">
         <div style="text-align: center;">
-            <button type="button" class="button buttonBlue">Отмена
+            <button type="button" class="button buttonBlue" onclick="window.location.href='/'">Отмена
                 <div class="ripples buttonRipples">
                     <span class="ripplesCircle"></span></div>
                 <button type="submit" class="button buttonWhite">OK

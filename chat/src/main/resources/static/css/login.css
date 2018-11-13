@@ -61,7 +61,7 @@ label {
 }
 
 .error-label {
-    font-size: 12px;
+    font-size: 11px;
     font-weight: bold;
     position: absolute;
     pointer-events: none;
@@ -71,7 +71,10 @@ label {
     color: #ff2025;
 }
 
-
+.nice-label {
+    font-size: 10px;
+    color: #0db743;
+}
 
 /* active */
 

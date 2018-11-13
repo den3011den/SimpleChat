@@ -24,6 +24,11 @@ public class UsersRecord {
     @Column(name = "PASSWORD", nullable = false)
     String password;
 
+    public UsersRecord (){};
+    public UsersRecord (String login){
+        this.login = login;
+    };
+
     @Override
     public String toString() {
         return "UsersRecord{ id=" + id + ", login=" + login + ", password=" + password  + " }";
@@ -51,6 +56,12 @@ public class UsersRecord {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        UsersRecord another = (UsersRecord) o;
+        return ( login.compareTo(another.login) == 0);
     }
 
 
