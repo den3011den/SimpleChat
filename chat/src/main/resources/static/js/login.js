@@ -33,3 +33,62 @@ $(window, document, undefined).ready(function() {
     });
 
 });
+
+$( document ).ready(function() {
+
+    // SUBMIT FORM
+    $("#sendform").submit(function(event) {
+        // Prevent the form from submitting via the browser.
+        event.preventDefault();
+        ajaxPost();
+    });
+
+
+    function ajaxPost(){
+
+        // PREPARE FORM DATA
+        var formData = {
+            login : $("#login").val(),
+            message :  $("#message").val()
+        };
+
+        /* var sendingMass = [];*/
+
+        /*alert(JSON.stringify(formData));*/
+        // DO POST
+        $.ajax({
+            type : "POST",
+            contentType : "application/json",
+            url : "/sendmessage",
+            data : JSON.stringify(formData),
+            dataType : 'json',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            /*success : function(result) {   alert("222");
+                /*if(result.status == "Done"){
+                    $("#postResultDiv").html("<p style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" +
+                                                "Post Successfully! <br>" +
+                                                "---> Customer's Info: FirstName = " +
+                                                result.data.firstname + " ,LastName = " + result.data.lastname + "</p>");
+                }else{
+                    $("#postResultDiv").html("<strong>Error</strong>");
+                }
+                console.log(result);
+            },
+            error : function(e) {
+                alert("Error!")
+                console.log("ERROR: ", e);
+            }*/
+        });
+
+        // очистка поля сообщения
+        resetData();
+
+    }
+
+    function resetData(){
+        $("#message").val("");
+    }
+})

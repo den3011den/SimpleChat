@@ -36,22 +36,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-
-//    /*@Override
-//    public UsersRecord registerNewUserAccount(RegistrationForm registrationForm)/* throws EmailExistsException */{
-//        if (emailExist(accountDto.getEmail())) {
-//            throw new EmailExistsException(
-//                    "There is an account with that email adress:" + accountDto.getEmail());
-//        }*/
-//        UsersRecord usersRecord = new UsersRecord;
-//        usersRecord.setLogin(registrationForm.getUserName());
-//
-//        usersRecord.setPassword(passwordEncoder.encode(registrationForm.getPassword()));
-//
-//        user.setRole(new Role(Integer.valueOf(1), user));
-//
-//        return repository.save(user);
-//    }
 }
 
 

@@ -5,10 +5,11 @@ import bds.dao.MessagesRecord;
 import bds.dao.RolesRecord;
 import bds.dao.UsersRecord;
 import bds.dao.repo.MessagesRepository;
-import bds.dao.repo.UsersRepository;
 import bds.dao.repo.RolesRepository;
-import bds.services.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import bds.dao.repo.UsersRepository;
+import bds.dto.MessageDTO;
+import bds.services.LoginExistsException;
+import bds.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,14 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
 import java.util.Iterator;
@@ -40,7 +42,7 @@ import java.util.stream.Collectors;
 @EntityScan(basePackageClasses = {bds.dao.MessagesRecord.class, bds.dao.UsersRecord.class, bds.dao.RolesRecord.class, bds.dao.UserRoleRecord.class})
 public class ChatController {
 
-    private static final Logger log = LoggerFactory.getLogger(ChatController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ChatController.class);
 
     static private List<UsersRecord> allUsers;
     static private List<MessagesRecord> allMessages;
@@ -79,10 +81,10 @@ public class ChatController {
         allUsers = (List<UsersRecord>) usersRepository.findAll();
 
         if (allUsers.size() == 0) {
-            log.info("NO RECORDS");
+            ChatController.LOG.info("NO RECORDS");
         }
 
-        allUsers.stream().forEach(userrecord -> log.info(userrecord.toString()));
+        allUsers.stream().forEach(userrecord -> ChatController.LOG.info(userrecord.toString()));
     }
 
     public UsersRecord createUsersRecord(UsersRecord usersRecord) {
@@ -102,10 +104,10 @@ public class ChatController {
         allMessages = (List<MessagesRecord>) messagesRepository.findAll();
 
         if (allMessages.size() == 0) {
-            log.info("NO RECORDS");
+            ChatController.LOG.info("NO RECORDS");
         }
 
-        allMessages.stream().forEach(messagerecord -> log.info(messagerecord.toString()));
+        allMessages.stream().forEach(messagerecord -> ChatController.LOG.info(messagerecord.toString()));
     }
 
     public MessagesRecord createMessagesRecord(MessagesRecord messagesRecord) {
@@ -125,10 +127,10 @@ public class ChatController {
         allRoles = (List<RolesRecord>) rolesRepository.findAll();
 
         if (allRoles.size() == 0) {
-            log.info("NO RECORDS");
+            ChatController.LOG.info("NO RECORDS");
         }
 
-        allRoles.stream().forEach(rolerecord -> log.info(rolerecord.toString()));
+        allRoles.stream().forEach(rolerecord -> ChatController.LOG.info(rolerecord.toString()));
     }
 
     public RolesRecord createRolesRecord(RolesRecord rolesRecord) {
@@ -175,6 +177,25 @@ public class ChatController {
         return "/registrationpage";
     }
 
+    @RequestMapping(value = "/chat", method = RequestMethod.GET)
+    public String viewChat(Model model) {
+
+        String login = "";
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            login = ((UserDetails)principal).getUsername();
+        } else {
+            login = principal.toString();
+        }
+
+        model.addAttribute("login", login);
+
+        return "/chat";
+    }
+
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registrationAction(Model model, RegistrationForm registrationForm) {
 
@@ -197,5 +218,51 @@ public class ChatController {
 
         return "/login";
     }
+
+
+    // слушаем адрес /sendmessage, забираем объёкт сообщения, записываем в базу
+    @RequestMapping(value = "/sendmessage", method = RequestMethod.POST,
+            headers = "Accept=application/json", consumes="application/json")
+    @ResponseBody
+    public String getMessage(@RequestBody final MessageDTO messageDTO) throws Exception {
+
+        LOG.info("/sendmessage");
+        LOG.info("got object: " + messageDTO.toString());
+
+        MessagesRecord messagesRecord = new MessagesRecord();
+
+        messagesRecord.setMessage(messageDTO.getMessage());
+
+        allUsers = (List<UsersRecord>) usersRepository.findAll();
+
+        if (allUsers.size() == 0) {
+            ChatController.LOG.info("NO RECORDS");
+            ChatController.LOG.info("{success:\"false\";}");
+            return "{success:\"false\"}";
+        }
+
+        int foundId = 0;
+
+        for (UsersRecord element : allUsers) {
+            if (element.equals(new UsersRecord(messageDTO.getLogin()))) {
+                foundId = element.getId();
+            }
+        }
+
+        if (foundId == 0) {
+            ChatController.LOG.info("!!!  login " + messageDTO.getLogin() + " not found in table users");
+            ChatController.LOG.info("{success:\"false\";}");
+            return "{success:\"false\"}";
+        }
+
+        messagesRecord.setUserId(foundId);
+
+        messagesRepository.save(messagesRecord);
+
+        ChatController.LOG.info("recorded object \"" + messagesRecord.toString() + "\" "+ " into database table \"messages\"");
+
+        return "{success:\"true\"}";
+    }
+
 
 }

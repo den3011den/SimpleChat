@@ -1,13 +1,8 @@
 package bds.config;
 
-import bds.RegistrationForm;
-import bds.dao.UsersRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,15 +20,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
             http
+                    .csrf().disable()
                     .authorizeRequests()
                     .antMatchers("/chat").access("hasRole('ROLE_CLIENT')")
-                    .antMatchers( "/", "/registration", "/registrationpage","/register","/test").permitAll()
+                    .antMatchers( "/", "/registration", "/registrationpage","/register","/test", "/sendmessage").permitAll()
                     .antMatchers("/resources/**","/css", "/css/**","/img", "/img/**").permitAll()
                     .antMatchers("/error").authenticated()
                     .and()
                     .formLogin()
                     .loginPage("/login")
                     .defaultSuccessUrl("/chat", true)
+                    .and()
+                    .logout().logoutSuccessUrl("/home")
                     .permitAll()
                     .and()
                     .logout()
@@ -66,12 +64,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
-
-
-
-
-
-
 
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

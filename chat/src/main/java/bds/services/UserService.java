@@ -7,8 +7,6 @@ import bds.dao.UsersRecord;
 import bds.dao.repo.UserRoleRepository;
 import bds.dao.repo.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
