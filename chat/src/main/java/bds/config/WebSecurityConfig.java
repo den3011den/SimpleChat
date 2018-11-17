@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .csrf().disable()
                     .authorizeRequests()
                     .antMatchers("/chat", "/sendmessage","/getlatestmessages").access("hasRole('ROLE_CLIENT')")
-                    .antMatchers( "/", "/registration", "/registrationpage","/register","/test").permitAll()
+                    .antMatchers( "/", "/registration", "/registrationpage","/register", "/error").permitAll()
                     .antMatchers("/resources/**","/css", "/css/**","/img", "/img/**").permitAll()
                     .antMatchers("/error").authenticated()
                     .and()

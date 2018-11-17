@@ -161,23 +161,6 @@ public class ChatController {
     }
 
 
-
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String viewTestPage(Model model) {
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        Set<String> roles = authentication.getAuthorities().stream()
-                .map(r -> r.getAuthority()).collect(Collectors.toSet());
-
-        Iterator<String> iterator = roles.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.toString() + " " + iterator.next());
-        }
-
-        return "/error";
-    }
-
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String viewRegistrationPage(Model model) {
 
@@ -274,7 +257,11 @@ public class ChatController {
 
         ChatController.LOG.info("recorded object \"" + messagesRecord.toString() + "\" "+ " into database table \"messages\"");
 
-        double fff = Math.random();
+        /*double fff = Math.random();
+        if (fff>0.5)
+            return "{\"success\":\"true\"}";
+        else
+            return "{\"success\":\"false\"}"; */
 
         return "{\"success\":\"true\"}";
 
