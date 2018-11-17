@@ -16,20 +16,16 @@ h1 {
 }
 form {
     width: 100%;
-    margin: 4em auto;
-    padding: 3em 2em 2em 2em;
+
 }
 
 .group {
+    display: block-inline;
     position: relative;
-    margin-bottom: 15px;
+    /*margin-bottom: 15px;
+    margin: 4em auto;*/
+    padding: 7em 2em 2em 2em;
 }
-
-.buttongroup {
-    margin-top: -1em;
-    position: relative;
-}
-
 
 input {
     font-size: 12px;
@@ -44,12 +40,11 @@ input {
     border-top: 1px solid #757575;
     border-bottom: 1px solid #757575;
     border-right: 1px solid #757575;
-    position: absolute;
-    left: 6em;
+    position: relative;
+    float: left;
+    left: 3px;
     top: 0;
 }
-
-input:focus { outline: none; }
 
 
 /* Label */
@@ -57,122 +52,31 @@ label {
     font-size: 12px;
     font-weight: bold;
     pointer-events: none;
-    position: absolute;
+    position: relative;
     left: 0px;
     top: 5px;
+    float:left;
 }
-
-.error-label {
-    font-size: 11px;
-    font-weight: bold;
-    position: absolute;
-    pointer-events: none;
-    text-align:center;
-    top: 5px;
-    padding: 0px 45px;
-    color: #ff2025;
-}
-
-.nice-label {
-    font-size: 10px;
-    color: #0db743;
-}
-
-/* active */
-
-input:focus ~ label, input.used ~ label {
-    top: -20px;
-    -webkit-transform: scale(.75);
-    transform: scale(.75); left: -2px;
-    color: #4a89dc;
-}
-
-
-/* Underline */
-
-.bar {
-    position: relative;
-    display: block;
-    width: 70%;
-    left: 72px;
-    top: 27px;
-}
-
-.bar:before, .bar:after {
-    content: '';
-    height: 2px;
-    width: 0;
-    bottom: 1px;
-    position: absolute;
-    background: #4a89dc;
-    transition: all 0.2s ease;
-}
-
-.bar:before { left: 50%; }
-
-.bar:after { right: 50%; }
-
-
-/* active */
-
-input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
-
-
-/* Highlight */
-
-.highlight {
-    position: absolute;
-    height: 60%;
-    width: 100px;
-    top: 25%;
-    left: 0;
-    pointer-events: none;
-    opacity: 0.5;
-}
-
-
-/* active */
-
-input:focus ~ .highlight {
-    -webkit-animation: inputHighlighter 0.3s ease;
-    animation: inputHighlighter 0.3s ease;
-}
-
-
-/* Animations */
-
-@-webkit-keyframes inputHighlighter {
-    from { background: #4a89dc; }
-    to 	{ width: 0; background: transparent; }
-}
-
-@keyframes inputHighlighter {
-    from { background: #4a89dc; }
-    to 	{ width: 0; background: transparent; }
-}
-
 
 /* Button */
 
 .button {
     position: relative;
-    /*margin: .3em 0 1em 0;*/
     width: 100%;
-    vertical-align: middle;
     font-size: 12px;
     line-height: 8px;
     -webkit-font-smoothing: antialiased;
     text-align: center;
     letter-spacing: 1px;
     background: transparent;
-    /*border: 1;*/
     border-bottom: 1px solid #636363;
     border-top: 1px solid #636363;
     border-left: 1px solid #636363;
     border-right: 1px solid #636363;
     cursor: pointer;
     border-radius: 3px;
-    /*transition: all 0.15s ease;*/
+    word-wrap: break-word;
+    padding-bottom: 1em;
 }
 .button:focus { outline: 0; }
 
@@ -183,13 +87,12 @@ input:focus ~ .highlight {
     width: 10%;
     color: #fff;
     background: green;
-    /*display: block;*/
     padding: 8px 4px;
     text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
     margin-right: 1px;
     position: relative;
     float: left;
-    left: 915px;
+    left: 5px;
     top: 0;
 }
 
@@ -202,10 +105,10 @@ input:focus ~ .highlight {
     text-align: center;
     padding: 8px 4px;
     text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
-    /*top: 100px;*/
-    position: absolute;
-    right: 30px;
-    top: 55px;
+    position: relative;
+    float:right;
+    right: 0px;
+    top: 0;
 
 }
 
@@ -216,7 +119,7 @@ input:focus ~ .highlight {
 /* Ripples container */
 
 .ripples {
-    position: absolute;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -229,7 +132,7 @@ input:focus ~ .highlight {
 /* Ripples circle */
 
 .ripplesCircle {
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -298,6 +201,15 @@ footer a:hover {
 .own-message {
     background-color:#B5FFAA;
 }
-
 .messagesDiv {
+    position:relative;
+    top: 0em;
+}
+
+.postResultDiv {
+    position:relative;
+    top: 0em;
+    background-color: #e0e4ef;
+    color:red;
+    text-align: center;
 }
