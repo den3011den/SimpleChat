@@ -6,27 +6,22 @@
         <sql>
             create table USERS
             (
-            ID INTEGER AUTO_INCREMENT(1,1) PRIMARY KEY,
-            LOGIN VARCHAR(50) not null
+            ID       INTEGER      AUTO_INCREMENT(1,1) PRIMARY KEY,
+            LOGIN    VARCHAR(50)  not null
             constraint USERS_LOGIN_UINDEX unique,
             PASSWORD VARCHAR(100) not null
             );
             comment on table USERS is 'Пользователи чата';
 
-            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (1, 'user 1',
-            '$2a$10$O/VceVksPJ8ijmVMeJ/tBunThwb0Ygtulme4OT/h8aKRzm/cVnYYm');
-            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (2, 'user 2',
-            '$2a$10$31Rybrw8xcu5tG9fIp0ePOwIwxbJqOpI8BgLqiFwlgL9gsOX5i0xe');
-            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (3, 'user 3',
-            '$2a$10$cNbG6U/o5nZRXb73sZrF5eFw8t0rey5Gb6/URwYNP6tg.YPOqxauG');
-            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (4, 'user 4',
-            '$2a$10$kcWHKwDqgyYLNV6YNGxzGu1V.DZW6f/JFlVX.XaVQrzzE3PnU5JF2');
-            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (5, 'user 5',
-            '$2a$10$elF3ETkvzBzuGR2XJY/I3uxby0edfHfQHc8dC6yUZlsoNB0kjcAIW');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (1, 'user 1', '$2a$10$O/VceVksPJ8ijmVMeJ/tBunThwb0Ygtulme4OT/h8aKRzm/cVnYYm');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (2, 'user 2', '$2a$10$31Rybrw8xcu5tG9fIp0ePOwIwxbJqOpI8BgLqiFwlgL9gsOX5i0xe');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (3, 'user 3', '$2a$10$cNbG6U/o5nZRXb73sZrF5eFw8t0rey5Gb6/URwYNP6tg.YPOqxauG');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (4, 'user 4', '$2a$10$kcWHKwDqgyYLNV6YNGxzGu1V.DZW6f/JFlVX.XaVQrzzE3PnU5JF2');
+            INSERT INTO PUBLIC.USERS (ID, LOGIN, PASSWORD) VALUES (5, 'user 5', '$2a$10$elF3ETkvzBzuGR2XJY/I3uxby0edfHfQHc8dC6yUZlsoNB0kjcAIW');
 
             create table MESSAGES
             (
-            ID INTEGER AUTO_INCREMENT(1,1) PRIMARY KEY,
+            ID      INTEGER      AUTO_INCREMENT(1,1) PRIMARY KEY,
             USER_ID INTEGER not null,
             MESSAGE VARCHAR(200) not null
             )
