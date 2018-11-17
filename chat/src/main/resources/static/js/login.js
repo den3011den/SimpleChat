@@ -52,10 +52,6 @@ $( document ).ready(function() {
             message :  $("#message").val()
         };
 
-        /* var sendingMass = [];*/
-
-        /*alert(JSON.stringify(formData));*/
-        // DO POST
         $.ajax({
             type : "POST",
             contentType : "application/json",
@@ -66,29 +62,25 @@ $( document ).ready(function() {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            /*success : function(result) {   alert("222");
-                /*if(result.status == "Done"){
-                    $("#postResultDiv").html("<p style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" +
-                                                "Post Successfully! <br>" +
-                                                "---> Customer's Info: FirstName = " +
-                                                result.data.firstname + " ,LastName = " + result.data.lastname + "</p>");
-                }else{
-                    $("#postResultDiv").html("<strong>Error</strong>");
+            success: function(jsondata) {
+                if (jsondata.success == "true") {
+                    resetData();
+                    $("#postResultDiv").html("<p></p>");
                 }
-                console.log(result);
+                else  {
+                    $("#postResultDiv").html("<p style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" +
+                        "Не удалось отправить сообщение! Сервер получил данные, но не смог сохранить их в БД <br>" + "</p>");
+                }
             },
             error : function(e) {
-                alert("Error!")
-                console.log("ERROR: ", e);
-            }*/
+                $("#postResultDiv").html("<div style='background-color:#7FA7B0; color:white; padding:20px 20px 20px 20px'>" +
+                    "Не удалось отправить сообщение! Возможно сервер не доступен. <br>" + "</div>");
+            }
         });
-
-        // очистка поля сообщения
-        resetData();
-
-    }
+    };
 
     function resetData(){
         $("#message").val("");
     }
-})
+
+});

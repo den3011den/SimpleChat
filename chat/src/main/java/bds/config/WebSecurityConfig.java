@@ -1,5 +1,7 @@
 package bds.config;
 
+import bds.model.MyAuthenticationSuccessHandler;
+import bds.model.MyLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,27 +18,33 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
             http
                     .csrf().disable()
                     .authorizeRequests()
-                    .antMatchers("/chat").access("hasRole('ROLE_CLIENT')")
-                    .antMatchers( "/", "/registration", "/registrationpage","/register","/test", "/sendmessage").permitAll()
+                    .antMatchers("/chat", "/sendmessage","/getlatestmessages").access("hasRole('ROLE_CLIENT')")
+                    .antMatchers( "/", "/registration", "/registrationpage","/register","/test").permitAll()
                     .antMatchers("/resources/**","/css", "/css/**","/img", "/img/**").permitAll()
                     .antMatchers("/error").authenticated()
                     .and()
                     .formLogin()
                     .loginPage("/login")
                     .defaultSuccessUrl("/chat", true)
+                    .successHandler(myAuthenticationSuccessHandler)
                     .and()
                     .logout().logoutSuccessUrl("/home")
+                    .logoutSuccessHandler(myLogoutSuccessHandler)
                     .permitAll()
                     .and()
                     .logout()
-                    .permitAll();
-
+                    .permitAll()
+                    .and()
+                    .sessionManagement()
+                    .maximumSessions(1)
+                    .maxSessionsPreventsLogin(false);
         }
 
     @Autowired
@@ -44,6 +52,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    @Autowired
+    private MyLogoutSuccessHandler myLogoutSuccessHandler;
+
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -64,6 +79,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
+
+    @Bean
+    public MyAuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        MyAuthenticationSuccessHandler myHandler = new MyAuthenticationSuccessHandler();
+        return myHandler;
+    };
+
+    @Bean
+    public MyLogoutSuccessHandler myLogoutSuccessHandler() {
+        MyLogoutSuccessHandler myHandler = new MyLogoutSuccessHandler();
+        return myHandler;
+    };
+
+
 
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {

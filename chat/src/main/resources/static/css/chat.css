@@ -285,3 +285,19 @@ footer a:hover {
     color: #666;
     text-decoration: underline;
 }
+
+
+.message{
+    padding:20px 20px 20px 20px;
+    color:black;
+    margin-top: 7px;
+}
+.other-message {
+    background-color:#A7D7E0;
+}
+.own-message {
+    background-color:#B5FFAA;
+}
+
+.messagesDiv {
+}

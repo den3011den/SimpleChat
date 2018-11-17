@@ -9,18 +9,6 @@ public class MessageDTO {
     private String login;
     private String message;
 
-   /* public MessageDTO() {}
-
-    public MessageDTO(String login, String message) {
-        this.login = login;
-        this.message = message;
-    }*/
-
-    /*public MessageDTO(String jsonString) throws IOException {
-        MessageDTO messageDTO = MessageDTO.fromJson(jsonString);
-        this.login = messageDTO.getLogin();
-        this.login = messageDTO.getMessage();
-     }*/
 
     public String getLogin() {
         return login;

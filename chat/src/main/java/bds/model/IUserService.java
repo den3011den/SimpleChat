@@ -1,4 +1,4 @@
-package bds;
+package bds.model;
 
 import bds.dao.UsersRecord;
 import bds.services.LoginExistsException;

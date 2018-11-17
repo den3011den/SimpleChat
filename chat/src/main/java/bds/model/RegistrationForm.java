@@ -1,4 +1,4 @@
-package bds;
+package bds.model;
 
 public class RegistrationForm {
 

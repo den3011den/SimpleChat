@@ -1,6 +1,6 @@
 package bds.controllers;
 
-import bds.RegistrationForm;
+import bds.model.RegistrationForm;
 import bds.dao.MessagesRecord;
 import bds.dao.RolesRecord;
 import bds.dao.UsersRecord;
@@ -10,9 +10,11 @@ import bds.dao.repo.UsersRepository;
 import bds.dto.MessageDTO;
 import bds.services.LoginExistsException;
 import bds.services.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -41,6 +44,14 @@ import java.util.stream.Collectors;
 @EnableJpaRepositories("bds.dao")
 @EntityScan(basePackageClasses = {bds.dao.MessagesRecord.class, bds.dao.UsersRecord.class, bds.dao.RolesRecord.class, bds.dao.UserRoleRecord.class})
 public class ChatController {
+
+
+    @Value("${chat.maxMessagesOnThePage.prop}")
+    private String maxMessagesOnThePage;
+
+    @Value("${chat.pageTickTime.prop}")
+    private String pageTickTime;
+
 
     private static final Logger LOG = LoggerFactory.getLogger(ChatController.class);
 
@@ -191,6 +202,8 @@ public class ChatController {
         }
 
         model.addAttribute("login", login);
+        model.addAttribute("maxMessagesOnThePage", maxMessagesOnThePage);
+        model.addAttribute("pageTickTime", pageTickTime);
 
         return "/chat";
     }
@@ -237,8 +250,8 @@ public class ChatController {
 
         if (allUsers.size() == 0) {
             ChatController.LOG.info("NO RECORDS");
-            ChatController.LOG.info("{success:\"false\";}");
-            return "{success:\"false\"}";
+            ChatController.LOG.info("{\"success\":\"false\";}");
+            return "{\"success\":\"false\"}";
         }
 
         int foundId = 0;
@@ -252,7 +265,7 @@ public class ChatController {
         if (foundId == 0) {
             ChatController.LOG.info("!!!  login " + messageDTO.getLogin() + " not found in table users");
             ChatController.LOG.info("{success:\"false\";}");
-            return "{success:\"false\"}";
+            return "{\"success\":\"false\"}";
         }
 
         messagesRecord.setUserId(foundId);
@@ -261,7 +274,52 @@ public class ChatController {
 
         ChatController.LOG.info("recorded object \"" + messagesRecord.toString() + "\" "+ " into database table \"messages\"");
 
-        return "{success:\"true\"}";
+        double fff = Math.random();
+
+        return "{\"success\":\"true\"}";
+
+    }
+
+
+    // слушаем адрес /getlatestmessages, забираем объёкт сообщения
+    @RequestMapping(value = "/getlatestmessages", method = RequestMethod.POST,
+            headers = "Accept=application/json", consumes="application/json")
+    @ResponseBody
+    public String sendLatestMessages(@RequestBody final MessageDTO messageDTO) throws Exception {
+
+        List<MessageDTO> listToSend = null;
+
+        LOG.info("/getlatestmessages");
+
+        if(messageDTO!=null) {
+
+            String login = messageDTO.getLogin();
+
+            if (!login.isEmpty()) {
+
+                LOG.info("got object: " + login);
+                LOG.info("/getlatestmessages : got request for login " + login);
+
+                listToSend = userService.getLatestMessagesForUser(login);
+
+            } else {
+                LOG.info("/getlatestmessages  : got request with login");
+            }
+
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonListToSend = mapper.writeValueAsString(listToSend);
+            LOG.info("/getlatestmessages  : sent to " + login + ":" + jsonListToSend);
+            return jsonListToSend;
+        }
+        else
+        {
+            LOG.info("/getlatestmessages  : got request with empty request object");
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonListToSend = mapper.writeValueAsString(listToSend);
+        LOG.info("/getlatestmessages  : sent : "+ jsonListToSend);
+        return mapper.writeValueAsString(listToSend);
     }
 
 
