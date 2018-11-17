@@ -9,28 +9,31 @@
 <body>
 <h1>Чат</h1>
 
-<div style="text-align: center;position: absolute; width: 90%" class="error-label nice-label" th:if="${#httpServletRequest.remoteUser}!=null"
-     th:utext="'Вы вошли в систему под пользователем - ' + ${#httpServletRequest.remoteUser}">..</div>
+<div style="text-align: center;position: absolute; width: 90%" class="error-label nice-label"
+     th:if="${#httpServletRequest.remoteUser}!=null"
+     th:utext="'Вы вошли в систему под пользователем - ' + ${#httpServletRequest.remoteUser}">..
+</div>
 
 
 <form th:action="@{/logout}" method="post">
-      <div class="buttongroup">
+    <div class="buttongroup">
         <div style="text-align: center;">
             <button th:if="${#httpServletRequest.remoteUser}!=null" type="submit" class="button buttonBlue">Выход
-                    <div class="ripples buttonRipples">
-                        <span class="ripplesCircle"></span>
-                    </div>
-                </button>
-                <button th:if="${#httpServletRequest.remoteUser}==null" type="button" class="button buttonBlue" onclick="window.location.href='/login'">Вход
-                    <div class="ripples buttonRipples">
-                        <span class="ripplesCircle"></span>
-                    </div>
-                </button>
-                <button type="button" class="button buttonWhite" onclick="window.location.href='/registration'">Регистрация
-                    <div class="ripples buttonRipples">
-                        <span class="ripplesCircle"></span>
-                    </div>
-                </button>
+                <div class="ripples buttonRipples">
+                    <span class="ripplesCircle"></span>
+                </div>
+            </button>
+            <button th:if="${#httpServletRequest.remoteUser}==null" type="button" class="button buttonBlue"
+                    onclick="window.location.href='/login'">Вход
+                <div class="ripples buttonRipples">
+                    <span class="ripplesCircle"></span>
+                </div>
+            </button>
+            <button type="button" class="button buttonWhite" onclick="window.location.href='/registration'">Регистрация
+                <div class="ripples buttonRipples">
+                    <span class="ripplesCircle"></span>
+                </div>
+            </button>
         </div>
     </div>
 </form>

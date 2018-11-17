@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-@Table(name="messages")
+@Table(name = "messages")
 public class MessagesRecord {
 
     @Id
@@ -25,7 +25,7 @@ public class MessagesRecord {
 
     @Override
     public String toString() {
-        return "MessagesRecord{ id=" + id + ", userId=" + userId + ", message=" + message  + " }";
+        return "MessagesRecord{ id=" + id + ", userId=" + userId + ", message=" + message + " }";
     }
 
     public int getId() {

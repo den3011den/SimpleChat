@@ -1,9 +1,7 @@
 package bds.services;
 
-import bds.controllers.ChatController;
 import bds.dao.MessagesRecord;
 import bds.dto.MessageDTO;
-import bds.model.IUserService;
 import bds.model.RegistrationForm;
 import bds.dao.UserRoleRecord;
 import bds.dao.UsersRecord;
@@ -18,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManagerFactory;
@@ -30,10 +27,8 @@ import static bds.application.ChatApplication.topMessageIdForUser;
 @Service
 public class UserService implements IUserService {
 
-
     @Value("${chat.maxMessagesOnThePage.prop}")
     private String maxMessagesOnThePage;
-
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -41,13 +36,18 @@ public class UserService implements IUserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 
     static private List<UsersRecord> allUsers;
-    static private List<MessagesRecord> allMessages;
 
     @Autowired
     private UsersRepository usersRepository;
 
     @Autowired
     private UserRoleRepository userRoleRepository;
+
+
+    @Bean
+    public SessionFactory sessionFactory(EntityManagerFactory emf) {
+        return emf.unwrap(SessionFactory.class);
+    }
 
 
     @Override
@@ -86,7 +86,6 @@ public class UserService implements IUserService {
 
 
     public void forgetTopMessageIdForUser(String login) {
-
 
         if (!login.isEmpty()) {
             UserService.LOG.info("forgot top message id for " + login);
@@ -162,12 +161,12 @@ public class UserService implements IUserService {
 
         int topId = 0;
 
-        while(rs.next()){
+        while (rs.next()) {
             records++;
             //извлечение по имени столбца
-            int messageId  = rs.getInt("id");
-            String userLogin  = rs.getString("login");
-            String message  = rs.getString("message");
+            int messageId = rs.getInt("id");
+            String userLogin = rs.getString("login");
+            String message = rs.getString("message");
 
             MessageDTO messageDTO = new MessageDTO();
             messageDTO.setLogin(userLogin);
@@ -186,11 +185,5 @@ public class UserService implements IUserService {
         return listForReturn;
     }
 
-
-
-    @Bean
-    public SessionFactory sessionFactory(EntityManagerFactory emf) {
-        return emf.unwrap(SessionFactory.class);
-    }
 
 }

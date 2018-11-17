@@ -22,36 +22,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-            http
-                    .csrf().disable()
-                    .authorizeRequests()
-                    .antMatchers("/chat", "/sendmessage","/getlatestmessages").access("hasRole('ROLE_CLIENT')")
-                    .antMatchers( "/", "/registration", "/registrationpage","/register", "/error").permitAll()
-                    .antMatchers("/resources/**","/css", "/css/**","/img", "/img/**").permitAll()
-                    .antMatchers("/error").authenticated()
-                    .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/chat", true)
-                    .successHandler(myAuthenticationSuccessHandler)
-                    .and()
-                    .logout().logoutSuccessUrl("/home")
-                    .logoutSuccessHandler(myLogoutSuccessHandler)
-                    .permitAll()
-                    .and()
-                    .logout()
-                    .permitAll()
-                    .and()
-                    .sessionManagement()
-                    .maximumSessions(1)
-                    .maxSessionsPreventsLogin(false);
-        }
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/chat", "/sendmessage", "/getlatestmessages").access("hasRole('ROLE_CLIENT')")
+                .antMatchers("/", "/registration", "/registrationpage", "/register", "/error").permitAll()
+                .antMatchers("/resources/**", "/css", "/css/**", "/img", "/img/**").permitAll()
+                .antMatchers("/error").authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/chat", true)
+                .successHandler(myAuthenticationSuccessHandler)
+                .and()
+                .logout().logoutSuccessUrl("/home")
+                .logoutSuccessHandler(myLogoutSuccessHandler)
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll()
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(false);
+    }
 
     @Autowired
     private DataSource dataSource;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
@@ -63,19 +60,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .jdbcAuthentication().dataSource(dataSource)
-            .passwordEncoder(passwordEncoder())
-            .usersByUsernameQuery(
-                    "select TRIM(login) as username, password as password, 'true' as enabled "
-                            + "from users where login = ?")
-            .authoritiesByUsernameQuery("select TRIM(users.login) as username, UPPER(TRIM(roles.name)) as role from users, roles, userrole where users.login = ? and " +
-                    "userrole.user_id = users.id and" +
-                    " userrole.role_id=roles.id")
-            .rolePrefix("ROLE_");
-        }
+                .jdbcAuthentication().dataSource(dataSource)
+                .passwordEncoder(passwordEncoder())
+                .usersByUsernameQuery(
+                        "select TRIM(login) as username, password as password, 'true' as enabled "
+                                + "from users where login = ?")
+                .authoritiesByUsernameQuery("select TRIM(users.login) as username, UPPER(TRIM(roles.name)) as role from users, roles, userrole where users.login = ? and " +
+                        "userrole.user_id = users.id and" +
+                        " userrole.role_id=roles.id")
+                .rolePrefix("ROLE_");
+    }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
@@ -84,23 +81,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public MyAuthenticationSuccessHandler myAuthenticationSuccessHandler() {
         MyAuthenticationSuccessHandler myHandler = new MyAuthenticationSuccessHandler();
         return myHandler;
-    };
+    }
+
+    ;
 
     @Bean
     public MyLogoutSuccessHandler myLogoutSuccessHandler() {
         MyLogoutSuccessHandler myHandler = new MyLogoutSuccessHandler();
         return myHandler;
-    };
-
-
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user 1").password("111").roles("CLIENT");
-//    }
-
     }
+
+    ;
+
+}
 
 

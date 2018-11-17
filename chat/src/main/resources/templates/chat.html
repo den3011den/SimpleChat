@@ -19,18 +19,13 @@
 
         <label>Сообщение</label>
 
-        <input type="text" placeholder="Текст сообщения" maxlength="100" name="message" id="message"  required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
+        <input type="text" placeholder="Текст сообщения" maxlength="200" name="message" id="message"  required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
 
         <button id="submitbutton" name="submitbutton" type="submit" class="button buttonGreen">Отправить
             <div class="ripples buttonRipples">
                 <span class="ripplesCircle"></span>
             </div>
         </button>
-
-
-
-
-
     </form>
 
     <form name="logoutForm" th:action="@{/logout}" method="post">

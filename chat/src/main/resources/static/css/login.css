@@ -1,4 +1,6 @@
-* { box-sizing:border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: Helvetica;
@@ -10,10 +12,11 @@ h1 {
     font-weight: bold;
     font-size: 22px;
     color: #636363;
-    text-align:center;
+    text-align: center;
     margin-top: 1em;
     margin-bottom: -4em;
 }
+
 form {
     width: 350px;
     margin: 4em auto;
@@ -31,7 +34,6 @@ form {
     position: relative;
 }
 
-
 input {
     font-size: 12px;
     padding: 5px 5px 5px 5px;
@@ -47,8 +49,9 @@ input {
     border-right: 1px solid #757575;
 }
 
-input:focus { outline: none; }
-
+input:focus {
+    outline: none;
+}
 
 /* Label */
 label {
@@ -65,7 +68,7 @@ label {
     font-weight: bold;
     position: absolute;
     pointer-events: none;
-    text-align:center;
+    text-align: center;
     top: 5px;
     padding: 0px 45px;
     color: #ff2025;
@@ -81,10 +84,10 @@ label {
 input:focus ~ label, input.used ~ label {
     top: -20px;
     -webkit-transform: scale(.75);
-    transform: scale(.75); left: -2px;
+    transform: scale(.75);
+    left: -2px;
     color: #4a89dc;
 }
-
 
 /* Underline */
 
@@ -104,15 +107,19 @@ input:focus ~ label, input.used ~ label {
     transition: all 0.2s ease;
 }
 
-.bar:before { left: 50%; }
+.bar:before {
+    left: 50%;
+}
 
-.bar:after { right: 50%; }
-
+.bar:after {
+    right: 50%;
+}
 
 /* active */
 
-input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
-
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width: 50%;
+}
 
 /* Highlight */
 
@@ -126,7 +133,6 @@ input:focus ~ .bar:before, input:focus ~ .bar:after { width: 50%; }
     opacity: 0.5;
 }
 
-
 /* active */
 
 input:focus ~ .highlight {
@@ -134,19 +140,27 @@ input:focus ~ .highlight {
     animation: inputHighlighter 0.3s ease;
 }
 
-
 /* Animations */
 
 @-webkit-keyframes inputHighlighter {
-    from { background: #4a89dc; }
-    to 	{ width: 0; background: transparent; }
+    from {
+        background: #4a89dc;
+    }
+    to {
+        width: 0;
+        background: transparent;
+    }
 }
 
 @keyframes inputHighlighter {
-    from { background: #4a89dc; }
-    to 	{ width: 0; background: transparent; }
+    from {
+        background: #4a89dc;
+    }
+    to {
+        width: 0;
+        background: transparent;
+    }
 }
-
 
 /* Button */
 
@@ -170,8 +184,10 @@ input:focus ~ .highlight {
     border-radius: 3px;
     /*transition: all 0.15s ease;*/
 }
-.button:focus { outline: 0; }
 
+.button:focus {
+    outline: 0;
+}
 
 /* Button modifiers */
 
@@ -184,7 +200,9 @@ input:focus ~ .highlight {
     margin-right: 1px;
 }
 
-.buttonBlue:hover { background: #357bd8; }
+.buttonBlue:hover {
+    background: #357bd8;
+}
 
 .buttonWhite {
     width: 20%;
@@ -194,9 +212,9 @@ input:focus ~ .highlight {
     text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
 }
 
-.buttonWhite:hover { background: #357bd8;}
-
-
+.buttonWhite:hover {
+    background: #357bd8;
+}
 
 /* Ripples container */
 
@@ -209,7 +227,6 @@ input:focus ~ .highlight {
     overflow: hidden;
     background: transparent;
 }
-
 
 /* Ripples circle */
 
@@ -231,13 +248,16 @@ input:focus ~ .highlight {
     animation: ripples .4s ease-in;
 }
 
-
 /* Ripples animation */
 
 @-webkit-keyframes ripples {
-    0% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
 
-    25% { opacity: 1; }
+    25% {
+        opacity: 1;
+    }
 
     100% {
         width: 200%;
@@ -247,9 +267,13 @@ input:focus ~ .highlight {
 }
 
 @keyframes ripples {
-    0% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
 
-    25% { opacity: 1; }
+    25% {
+        opacity: 1;
+    }
 
     100% {
         width: 200%;
@@ -257,8 +281,6 @@ input:focus ~ .highlight {
         opacity: 0;
     }
 }
-
-
 
 footer a {
     color: #4a89dc;

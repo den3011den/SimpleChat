@@ -21,35 +21,38 @@
     </div>
 
     <div class="error-label nice-label" th:if="${infoMessage!=null}"
-          th:utext="${infoMessage}">..</div>
+         th:utext="${infoMessage}">..
+    </div>
 
-        <div class="group">
-            <input type="text" name="username" th:value="*{username}" placeholder="Логин" maxlength="50" required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
-            <div style="text-align: center;">
-                <label>Логин</label>
-            </div>
+    <div class="group">
+        <input type="text" name="username" th:value="*{username}" placeholder="Логин" maxlength="50" required="true"
+               autofocus="true"/><span class="highlight"></span><span class="bar"></span>
+        <div style="text-align: center;">
+            <label>Логин</label>
         </div>
-        <div class="group">
-            <input type="password" name="password" placeholder="Пароль" maxlength="50" required="true"/><span class="highlight"></span><span class="bar"></span>
-            <div style="text-align: center;">
-                <label>Пароль</label>
-            </div>
+    </div>
+    <div class="group">
+        <input type="password" name="password" placeholder="Пароль" maxlength="50" required="true"/><span
+            class="highlight"></span><span class="bar"></span>
+        <div style="text-align: center;">
+            <label>Пароль</label>
         </div>
-        <div class="buttongroup">
-            <div style="text-align: center;">
-                <button type="button" class="button buttonBlue" onclick="window.location.href='/'">Отмена
+    </div>
+    <div class="buttongroup">
+        <div style="text-align: center;">
+            <button type="button" class="button buttonBlue" onclick="window.location.href='/'">Отмена
+                <div class="ripples buttonRipples">
+                    <span class="ripplesCircle"></span></div>
+                <button type="submit" class="button buttonWhite">OK
                     <div class="ripples buttonRipples">
                         <span class="ripplesCircle"></span></div>
-                    <button type="submit" class="button buttonWhite">OK
-                        <div class="ripples buttonRipples">
-                            <span class="ripplesCircle"></span></div>
-                    </button>
                 </button>
-            </div>
+            </button>
         </div>
-    </form>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-    <script src="js/login.js"></script>
-    </body>
+    </div>
+</form>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="js/login.js"></script>
+</body>
 
-    </html>
+</html>

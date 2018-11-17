@@ -1,6 +1,5 @@
 package bds.model;
 
-import bds.controllers.ChatController;
 import bds.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

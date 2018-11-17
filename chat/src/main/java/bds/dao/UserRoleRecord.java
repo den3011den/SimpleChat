@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-@Table(name="userrole")
+@Table(name = "userrole")
 public class UserRoleRecord {
 
     @Id
@@ -26,7 +26,7 @@ public class UserRoleRecord {
 
     @Override
     public String toString() {
-        return "UserRoleRecord{ id=" + id + ", userId=" + userId + ", roleId=" + roleId  + " }";
+        return "UserRoleRecord{ id=" + id + ", userId=" + userId + ", roleId=" + roleId + " }";
     }
 
     public int getId() {

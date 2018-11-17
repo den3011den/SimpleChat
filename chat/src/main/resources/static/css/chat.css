@@ -1,4 +1,6 @@
-* { box-sizing:border-box; }
+* {
+    box-sizing: border-box;
+}
 
 body {
     font-family: Helvetica;
@@ -10,10 +12,11 @@ h1 {
     font-weight: bold;
     font-size: 22px;
     color: #636363;
-    text-align:center;
+    text-align: center;
     margin-top: 1em;
     margin-bottom: -4em;
 }
+
 form {
     width: 100%;
 
@@ -46,7 +49,6 @@ input {
     top: 0;
 }
 
-
 /* Label */
 label {
     font-size: 12px;
@@ -55,7 +57,7 @@ label {
     position: relative;
     left: 0px;
     top: 5px;
-    float:left;
+    float: left;
 }
 
 /* Button */
@@ -78,8 +80,10 @@ label {
     word-wrap: break-word;
     padding-bottom: 1em;
 }
-.button:focus { outline: 0; }
 
+.button:focus {
+    outline: 0;
+}
 
 /* Button modifiers */
 
@@ -96,7 +100,9 @@ label {
     top: 0;
 }
 
-.buttonGreen:hover { background: #0db743; }
+.buttonGreen:hover {
+    background: #0db743;
+}
 
 .buttonRed {
     width: 5%;
@@ -106,15 +112,15 @@ label {
     padding: 8px 4px;
     text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
     position: relative;
-    float:right;
+    float: right;
     right: 0px;
     top: 0;
 
 }
 
-.buttonRed:hover { background: #FA791B;}
-
-
+.buttonRed:hover {
+    background: #FA791B;
+}
 
 /* Ripples container */
 
@@ -127,7 +133,6 @@ label {
     overflow: hidden;
     background: transparent;
 }
-
 
 /* Ripples circle */
 
@@ -149,13 +154,16 @@ label {
     animation: ripples .4s ease-in;
 }
 
-
 /* Ripples animation */
 
 @-webkit-keyframes ripples {
-    0% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
 
-    25% { opacity: 1; }
+    25% {
+        opacity: 1;
+    }
 
     100% {
         width: 200%;
@@ -165,9 +173,13 @@ label {
 }
 
 @keyframes ripples {
-    0% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
 
-    25% { opacity: 1; }
+    25% {
+        opacity: 1;
+    }
 
     100% {
         width: 200%;
@@ -175,8 +187,6 @@ label {
         opacity: 0;
     }
 }
-
-
 
 footer a {
     color: #4a89dc;
@@ -189,27 +199,29 @@ footer a:hover {
     text-decoration: underline;
 }
 
-
-.message{
-    padding:20px 20px 20px 20px;
-    color:black;
+.message {
+    padding: 20px 20px 20px 20px;
+    color: black;
     margin-top: 7px;
 }
+
 .other-message {
-    background-color:#A7D7E0;
+    background-color: #A7D7E0;
 }
+
 .own-message {
-    background-color:#B5FFAA;
+    background-color: #B5FFAA;
 }
+
 .messagesDiv {
-    position:relative;
+    position: relative;
     top: 0em;
 }
 
 .postResultDiv {
-    position:relative;
+    position: relative;
     top: 0em;
     background-color: #e0e4ef;
-    color:red;
+    color: red;
     text-align: center;
 }

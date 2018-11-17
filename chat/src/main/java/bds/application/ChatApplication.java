@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
- import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 @SpringBootApplication
-@ComponentScan({"bds.application","bds.controllers", "bds.config","bds.services"})
+@ComponentScan({"bds.application", "bds.controllers", "bds.config", "bds.services"})
 @PropertySource("classpath:/chat.properties")
 public class ChatApplication {
 

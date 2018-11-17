@@ -8,7 +8,7 @@ h1 {
     font-weight: bold;
     font-size: 22px;
     color: #636363;
-    text-align:center;
+    text-align: center;
     margin-top: 1em;
     margin-bottom: -4em;
 }
@@ -23,7 +23,6 @@ form {
     margin-top: -1em;
     position: relative;
 }
-
 
 input {
     font-size: 12px;
@@ -40,7 +39,9 @@ input {
     border-right: 1px solid #757575;
 }
 
-input:focus { outline: none; }
+input:focus {
+    outline: none;
+}
 
 /* Highlight */
 .highlight {
@@ -80,15 +81,17 @@ input:focus ~ .highlight {
     cursor: pointer;
     border-radius: 3px;
 }
-.button:focus { outline: 0; }
 
+.button:focus {
+    outline: 0;
+}
 
 .error-label {
     font-size: 11px;
     font-weight: bold;
     position: absolute;
     pointer-events: none;
-    text-align:center;
+    text-align: center;
     top: 5px;
     padding: 0px 45px;
     color: #ff2025;
@@ -109,7 +112,9 @@ input:focus ~ .highlight {
     margin-right: 1px;
 }
 
-.buttonBlue:hover { background: #357bd8; }
+.buttonBlue:hover {
+    background: #357bd8;
+}
 
 .buttonWhite {
     width: 35%;
@@ -119,7 +124,9 @@ input:focus ~ .highlight {
     text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
 }
 
-.buttonWhite:hover { background: #357bd8;}
+.buttonWhite:hover {
+    background: #357bd8;
+}
 
 /* Ripples container */
 .ripples {
@@ -131,7 +138,6 @@ input:focus ~ .highlight {
     overflow: hidden;
     background: transparent;
 }
-
 
 /* Ripples circle */
 
@@ -153,12 +159,15 @@ input:focus ~ .highlight {
     animation: ripples .4s ease-in;
 }
 
-
 /* Ripples animation */
 @-webkit-keyframes ripples {
-    0% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
 
-    25% { opacity: 1; }
+    25% {
+        opacity: 1;
+    }
 
     100% {
         width: 200%;
@@ -168,9 +177,13 @@ input:focus ~ .highlight {
 }
 
 @keyframes ripples {
-    0% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
 
-    25% { opacity: 1; }
+    25% {
+        opacity: 1;
+    }
 
     100% {
         width: 200%;

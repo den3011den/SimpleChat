@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class RolesRecord {
 
     @Id
@@ -41,4 +41,4 @@ public class RolesRecord {
         this.name = name;
     }
 
- }
+}

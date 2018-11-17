@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class UsersRecord {
 
     @Id
@@ -24,14 +24,20 @@ public class UsersRecord {
     @Column(name = "PASSWORD", nullable = false)
     String password;
 
-    public UsersRecord (){};
-    public UsersRecord (String login){
+    public UsersRecord() {
+    }
+
+    ;
+
+    public UsersRecord(String login) {
         this.login = login;
-    };
+    }
+
+    ;
 
     @Override
     public String toString() {
-        return "UsersRecord{ id=" + id + ", login=" + login + ", password=" + password  + " }";
+        return "UsersRecord{ id=" + id + ", login=" + login + ", password=" + password + " }";
     }
 
     public int getId() {
@@ -61,7 +67,7 @@ public class UsersRecord {
     @Override
     public boolean equals(Object o) {
         UsersRecord another = (UsersRecord) o;
-        return ( login.compareTo(another.login) == 0);
+        return (login.compareTo(another.login) == 0);
     }
 
 
