@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+// выполняем необходимые нам действия при разлогинивании пользователя
 @Component
 public class MyLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
@@ -28,10 +29,12 @@ public class MyLogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
         if (authentication != null) {
             String login = authentication.getName();
             MyLogoutSuccessHandler.LOG.info("logout user: " + login);
+            // удаляем запись о текущем максимальном id сообщения для пользователя
             userService.forgetTopMessageIdForUser(login);
         }
 
         setDefaultTargetUrl("/home");
+
         super.onLogoutSuccess(request, response, authentication);
     }
 }

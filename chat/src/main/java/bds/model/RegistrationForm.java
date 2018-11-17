@@ -1,5 +1,8 @@
 package bds.model;
 
+
+// класс для встраивания объекта класса в форму регистрации /resourses/templates/registrationpage.html
+// с помощью thymeleaf для передачи данных от сервера клиету и назад при регистрации в системе нового пользователя
 public class RegistrationForm {
 
     private String userName;

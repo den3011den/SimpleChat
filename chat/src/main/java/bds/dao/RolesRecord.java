@@ -6,16 +6,19 @@ import javax.validation.constraints.NotNull;
 
 import static javax.persistence.GenerationType.AUTO;
 
+// класс отображения записи таблицы БД roles - справочник ролей системы
 @Entity
 @Table(name = "roles")
 public class RolesRecord {
 
+    // уникальный id роли
     @Id
     @GeneratedValue(strategy = AUTO)
     @NotNull
     @Column(name = "ID", nullable = false)
     int id;
 
+    // наименование роли
     @NotNull
     @Column(name = "name", nullable = false)
     String name;

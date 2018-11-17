@@ -37,13 +37,15 @@ import java.util.List;
 @EntityScan(basePackageClasses = {bds.dao.MessagesRecord.class, bds.dao.UsersRecord.class, bds.dao.RolesRecord.class, bds.dao.UserRoleRecord.class})
 public class ChatController {
 
-
+    // максимальное количество сообщений чата, отображаемых одномоментно на странице чата + 1
+    // максимальное количество сообщений, передаваемое от сервера к клиенту в ответ на один запрос
     @Value("${chat.maxMessagesOnThePage.prop}")
     private String maxMessagesOnThePage;
 
+    // интервал запроса клиентом новых сообщений чата с сервера в миллисекундах
+    // по заданию : 1000 мс
     @Value("${chat.pageTickTime.prop}")
     private String pageTickTime;
-
 
     private static final Logger LOG = LoggerFactory.getLogger(ChatController.class);
 
@@ -69,6 +71,7 @@ public class ChatController {
     @Autowired
     UserService userService;
 
+    // контекст отдаёт клиенту страницу регистрации в БД чата
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String viewRegistrationPage(Model model) {
 
@@ -79,9 +82,12 @@ public class ChatController {
         return "/registrationpage";
     }
 
+
+    // при обращении к контексту клиенту возвращается страница чата
     @RequestMapping(value = "/chat", method = RequestMethod.GET)
     public String viewChat(Model model) {
 
+        // считываем залогиненного пользователя в системе
         String login = "";
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -92,6 +98,7 @@ public class ChatController {
             login = principal.toString();
         }
 
+        // записываем в модель данные, предаваемые клиенту вместе с формой чата
         model.addAttribute("login", login);
         model.addAttribute("maxMessagesOnThePage", maxMessagesOnThePage);
         model.addAttribute("pageTickTime", pageTickTime);
@@ -100,6 +107,7 @@ public class ChatController {
     }
 
 
+    // при обращении к контексту происходит попытка регистрации пользователя в БД чата
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String registrationAction(Model model, RegistrationForm registrationForm) {
 
@@ -111,6 +119,7 @@ public class ChatController {
 
             model.addAttribute("registrationForm", registrationForm);
             model.addAttribute("infoMessage", infoMessage);
+
             return "/registrationpage";
 
         }
@@ -170,7 +179,8 @@ public class ChatController {
     }
 
 
-    // слушаем адрес /getlatestmessages, забираем объёкт сообщения
+    // слушаем адрес /getlatestmessages, забираем объёкт сообщения - запрос передачи новых сообщений клиенту
+    // возвращаем в результате запроса список новых сообщений для клиента в json
     @RequestMapping(value = "/getlatestmessages", method = RequestMethod.POST,
             headers = "Accept=application/json", consumes = "application/json")
     @ResponseBody
@@ -206,6 +216,7 @@ public class ChatController {
         ObjectMapper mapper = new ObjectMapper();
         String jsonListToSend = mapper.writeValueAsString(listToSend);
         LOG.info("/getlatestmessages  : sent : " + jsonListToSend);
+
         return mapper.writeValueAsString(listToSend);
     }
 

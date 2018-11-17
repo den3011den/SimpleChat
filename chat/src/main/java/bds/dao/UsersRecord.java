@@ -6,20 +6,24 @@ import javax.validation.constraints.NotNull;
 
 import static javax.persistence.GenerationType.AUTO;
 
+// класс отображения записи таблицы БД users - справочник пользователей системы системы
 @Entity
 @Table(name = "users")
 public class UsersRecord {
 
+    // уникальный id пользователя в системе
     @Id
     @GeneratedValue(strategy = AUTO)
     @NotNull
     @Column(name = "ID", nullable = false)
     int id;
 
+    // логин пользователя в системе
     @NotNull
     @Column(name = "LOGIN", nullable = false)
     String login;
 
+    // пароль пользователя в системе в зашифрованом виде
     @NotNull
     @Column(name = "PASSWORD", nullable = false)
     String password;
@@ -64,6 +68,7 @@ public class UsersRecord {
         this.password = password;
     }
 
+    // идентичными считаем пользователей с одинаковым логином
     @Override
     public boolean equals(Object o) {
         UsersRecord another = (UsersRecord) o;

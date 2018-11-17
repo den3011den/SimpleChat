@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!-- Форма чата -->
 <head>
     <meta charset="UTF-8"/>
     <title>Чат</title>
@@ -12,14 +13,18 @@
     <div th:utext="'Чат - ' + ${#httpServletRequest.remoteUser}">..</div>
 </h1>
 
+<!-- используется для отправки сообщений на сервер и для запроса новых сообщений для отображения -->
 <input type="hidden" id="login" name="login" th:value="*{login}"/>
 
 <div class="group">
+
+    <!-- форма ввода пользователем и отправки своих сообщений на сервер -->
     <form id="sendform" name="sendform">
 
         <label>Сообщение</label>
 
-        <input type="text" placeholder="Текст сообщения" maxlength="200" name="message" id="message"  required="true" autofocus="true"/><span class="highlight"></span><span class="bar"></span>
+        <input type="text" placeholder="Текст сообщения" maxlength="200" name="message" id="message" required="true"
+               autofocus="true"/><span class="highlight"></span><span class="bar"></span>
 
         <button id="submitbutton" name="submitbutton" type="submit" class="button buttonGreen">Отправить
             <div class="ripples buttonRipples">
@@ -28,6 +33,7 @@
         </button>
     </form>
 
+    <!-- разлогиниться в чате -->
     <form name="logoutForm" th:action="@{/logout}" method="post">
         <button type="submit" class="button buttonRed">Выход
             <div class="ripples buttonRipples">
@@ -37,18 +43,22 @@
     </form>
 </div>
 
+<!-- интервал запроса новых сообщений у сервера в миллисекундах -->
 <input type="hidden" id="pageTickTime" name="pageTickTime" class="pageTickTime" th:value="*{pageTickTime}"/>
 
 
 <div class="varDives" id="varDives" name="varDives">
+    <!-- максимальное количество одномоментно отображаемых сообщений на странице чата -->
     <input type="hidden" id="maxCount" name="maxCount" class="maxCount" th:value="*{maxMessagesOnThePage}"/>
+    <!-- счётчик сообщений на странице -->
     <input type="hidden" id="currentCount" name="currentCount" class="currentCount" value="0"/>
 </div>
 
-
+<!-- для вывода сообщений об ошибках при отправке данных на сервер и запросах новых сообщений на сервере -->
 <div id="postResultDiv">
 </div>
 
+<!-- блок для отображения сообщений чата -->
 <div id="messagesDiv" class="messagesDiv">
 </div>
 

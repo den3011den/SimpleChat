@@ -19,6 +19,8 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
+
+     // Задаются права на доступ к контекстам
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -47,16 +49,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .maxSessionsPreventsLogin(false);
     }
 
+    // БД
     @Autowired
     private DataSource dataSource;
 
+    // для совершения нужных действий при логине пользователя
     @Autowired
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
 
+    // для совершения нужных нам действий при разлогинивании пользователя
     @Autowired
     private MyLogoutSuccessHandler myLogoutSuccessHandler;
 
 
+    // поиск пользователя в БД с его ролью и расшифровкой пароля
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -71,12 +77,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .rolePrefix("ROLE_");
     }
 
+    // для шифрования / расшифровки пароля пользователя
     @Bean
     public PasswordEncoder passwordEncoder() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
 
+    // вход пользователя в систему
     @Bean
     public MyAuthenticationSuccessHandler myAuthenticationSuccessHandler() {
         MyAuthenticationSuccessHandler myHandler = new MyAuthenticationSuccessHandler();
@@ -85,6 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     ;
 
+    // разлогинивание пользователя в системе
     @Bean
     public MyLogoutSuccessHandler myLogoutSuccessHandler() {
         MyLogoutSuccessHandler myHandler = new MyLogoutSuccessHandler();

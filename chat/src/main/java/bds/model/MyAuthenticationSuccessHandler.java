@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+// действия, которые будем делать при удачной аутентификации пользователя
 @Component
 public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
@@ -27,9 +28,13 @@ public class MyAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucce
 
         String login = authentication.getName();
         MyAuthenticationSuccessHandler.LOG.info("login user: " + login);
+        // запоминаем максимальный текущий id сообщения из таблицы сообщений БД messages
+        // При следующем запросе клиентом новых сообщений все сообщения в messages, у которых messages.id большие этого id,
+        // будут считаться новыми и их сервер будет передавать клиенту
         userService.rememberTopMessageIdForUser(authentication.getName());
 
         setDefaultTargetUrl("/chat");
+
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

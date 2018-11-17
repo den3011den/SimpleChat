@@ -5,10 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
+// класс для создания объектов для обмена данными между клиентом и сервером
+// в формате json
 public class MessageDTO {
-    private String login;
-    private String message;
 
+    // логин пользователя
+    private String login;
+    // содержимое сообщения прользователя
+    private String message;
 
     public String getLogin() {
         return login;
@@ -32,6 +36,7 @@ public class MessageDTO {
         return mapper.writeValueAsString(this);
     }
 
+    // из json в объект MessageDTO
     public static MessageDTO fromJson(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         MessageDTO messageDTO = mapper.readValue(jsonString, MessageDTO.class);

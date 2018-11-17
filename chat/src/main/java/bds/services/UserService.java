@@ -24,11 +24,22 @@ import java.sql.*;
 
 import static bds.application.ChatApplication.topMessageIdForUser;
 
+// сервис работы с таблицами БД
 @Service
 public class UserService implements IUserService {
 
+    // максимальное количество сообщений на странице чата + 1
+    // оно же
+    // максимальное количество передаваемых за раз новых сообщений от сервера к клиенту (по запросу клиента)
     @Value("${chat.maxMessagesOnThePage.prop}")
     private String maxMessagesOnThePage;
+
+
+    @Value("${spring.datasource.url}")
+    private String springDatasourceUrl;
+
+    @Value("${spring.datasource.driver-class-name}")
+    private String springDatasourceDriverClassName;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -50,6 +61,7 @@ public class UserService implements IUserService {
     }
 
 
+    // регистрация нового пользователя в системе
     @Override
     public UsersRecord registerNewUserAccount(RegistrationForm registrationForm) throws LoginExistsException {
         if (loginExists(registrationForm.getUserName())) {
@@ -65,6 +77,9 @@ public class UserService implements IUserService {
         UsersRecord savedRecord = usersRepository.save(usersRecord);
         UserRoleRecord userRoleRecord = new UserRoleRecord();
         userRoleRecord.setUserId(savedRecord.getId());
+
+        // в системе пока только одна роль в таблице roles
+        // id = 1 name = CLIENT
         userRoleRecord.setRoleId(1);
 
         userRoleRepository.save(userRoleRecord);
@@ -72,6 +87,7 @@ public class UserService implements IUserService {
         return savedRecord;
     }
 
+    // проверка на существование логина
     public boolean loginExists(String login) {
 
         allUsers = (List<UsersRecord>) usersRepository.findAll();
@@ -84,7 +100,8 @@ public class UserService implements IUserService {
         return loginContains;
     }
 
-
+    // забыть в системе последний номер записи таблицы сообщений клиенту
+    // используется при разлогинивании клиента
     public void forgetTopMessageIdForUser(String login) {
 
         if (!login.isEmpty()) {
@@ -93,31 +110,14 @@ public class UserService implements IUserService {
         }
     }
 
-
+    // запомнить в системе id последней отправленной клиенту записи сообщения чата из messages
+    // Изпользуется при логине пользователя в систему
     public int rememberTopMessageIdForUser(String login) {
 
         Integer topId = new Integer(0);
 
+        // поиск максимального текущего id сообщения чата в таблице сообщений БД messages
         Session session = sessionFactory.openSession();
-        Criteria userCriteria = session.createCriteria(UsersRecord.class);
-        userCriteria.add(Restrictions.eq("login", login));
-        UsersRecord user = (UsersRecord) userCriteria.uniqueResult();
-        session.close();
-
-        if (user == null) {
-            UserService.LOG.info("Cant find user login: " + login + " in Users");
-            return -1;
-        }
-
-        int foundId = 0;
-        foundId = user.getId();
-
-        if (foundId == 0) {
-            UserService.LOG.info("Cant find user login: " + login + " in Users");
-            return -1;
-        }
-
-        session = sessionFactory.openSession();
         Criteria messageCriteria = session.createCriteria(MessagesRecord.class);
         messageCriteria.addOrder(Order.desc("id"));
         messageCriteria.setMaxResults(1);
@@ -142,12 +142,13 @@ public class UserService implements IUserService {
     }
 
 
+    // Получить список новых сообщений для пользователя с логином login (возвращает этот список)
     public List<MessageDTO> getLatestMessagesForUser(String login) throws ClassNotFoundException, SQLException {
 
         List<MessageDTO> listForReturn = new ArrayList<>();
 
-        Class.forName("org.h2.Driver"); // подключение драйвера
-        Connection connection = DriverManager.getConnection("jdbc:h2:tcp://localhost:9092/~/ChatDatabase;USER=sa;PASSWORD=12345");
+        Class.forName(springDatasourceDriverClassName); // подключение драйвера
+        Connection connection = DriverManager.getConnection(springDatasourceUrl);
 
         Statement statement = connection.createStatement();
         // блоки не больше, чем 20 новых сообщений за раз

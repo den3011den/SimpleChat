@@ -6,20 +6,24 @@ import javax.validation.constraints.NotNull;
 
 import static javax.persistence.GenerationType.AUTO;
 
+// класс отображения записи таблицы БД userrole - список ролей привязанных к пользователям системы
 @Entity
 @Table(name = "userrole")
 public class UserRoleRecord {
 
+    // уникальный id записей таблицы
     @Id
     @GeneratedValue(strategy = AUTO)
     @NotNull
     @Column(name = "ID", nullable = false)
     int id;
 
+    // id пользователя. Связь с таблицей users по полю users.id
     @NotNull
     @Column(name = "USER_ID", nullable = false)
     int userId;
 
+    // id роли. Связь с таблицей roles по полю roles.id
     @NotNull
     @Column(name = "ROLE_ID", nullable = false)
     int roleId;
