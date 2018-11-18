@@ -31,7 +31,7 @@ public class MessageDTO {
     }
 
     // из объекта MessageDTO в json
-    public String toJson() throws JsonProcessingException {
+    private String toJson() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(this);
     }
@@ -39,8 +39,7 @@ public class MessageDTO {
     // из json в объект MessageDTO
     public static MessageDTO fromJson(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        MessageDTO messageDTO = mapper.readValue(jsonString, MessageDTO.class);
-        return messageDTO;
+        return mapper.readValue(jsonString, MessageDTO.class);
     }
 
     // toString будет выводить объект в json

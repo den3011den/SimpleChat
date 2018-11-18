@@ -3,7 +3,7 @@
 }
 
 body {
-    font-family: Helvetica;
+    font-family: Helvetica, serif;
     background: #eee;
     -webkit-font-smoothing: antialiased;
 }
@@ -37,10 +37,7 @@ input {
     color: #636363;
     width: 70%;
     border-radius: 3px;
-    border-left: 1px solid #757575;
-    border-top: 1px solid #757575;
-    border-bottom: 1px solid #757575;
-    border-right: 1px solid #757575;
+    border: 1px solid #757575;
     position: relative;
     float: left;
     left: 3px;
@@ -53,7 +50,7 @@ label {
     font-weight: bold;
     pointer-events: none;
     position: relative;
-    left: 0px;
+    left: 0;
     top: 5px;
     float: left;
 }
@@ -69,10 +66,7 @@ label {
     text-align: center;
     letter-spacing: 1px;
     background: transparent;
-    border-bottom: 1px solid #636363;
-    border-top: 1px solid #636363;
-    border-left: 1px solid #636363;
-    border-right: 1px solid #636363;
+    border: 1px solid #636363;
     cursor: pointer;
     border-radius: 3px;
     word-wrap: break-word;
@@ -111,7 +105,7 @@ label {
     text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
     position: relative;
     float: right;
-    right: 0px;
+    right: 0;
     top: 0;
 
 }
@@ -213,12 +207,12 @@ footer a:hover {
 
 .messagesDiv {
     position: relative;
-    top: 0em;
+    top: 0;
 }
 
 .postResultDiv {
     position: relative;
-    top: 0em;
+    top: 0;
     background-color: #e0e4ef;
     color: red;
     text-align: center;

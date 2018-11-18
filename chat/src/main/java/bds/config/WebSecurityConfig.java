@@ -80,27 +80,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // для шифрования / расшифровки пароля пользователя
     @Bean
     public PasswordEncoder passwordEncoder() {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 
     // вход пользователя в систему
     @Bean
     public MyAuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        MyAuthenticationSuccessHandler myHandler = new MyAuthenticationSuccessHandler();
-        return myHandler;
+        return new MyAuthenticationSuccessHandler();
     }
-
-    ;
 
     // разлогинивание пользователя в системе
     @Bean
     public MyLogoutSuccessHandler myLogoutSuccessHandler() {
-        MyLogoutSuccessHandler myHandler = new MyLogoutSuccessHandler();
-        return myHandler;
+        return new MyLogoutSuccessHandler();
     }
 
-    ;
 
 }
 

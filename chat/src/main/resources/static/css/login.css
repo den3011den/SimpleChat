@@ -3,7 +3,7 @@
 }
 
 body {
-    font-family: Helvetica;
+    font-family: Helvetica, serif;
     background: #eee;
     -webkit-font-smoothing: antialiased;
 }
@@ -43,10 +43,7 @@ input {
     color: #636363;
     width: 100%;
     border-radius: 3px;
-    border-left: 1px solid #757575;
-    border-top: 1px solid #757575;
-    border-bottom: 1px solid #757575;
-    border-right: 1px solid #757575;
+    border: 1px solid #757575;
 }
 
 input:focus {
@@ -70,7 +67,7 @@ label {
     pointer-events: none;
     text-align: center;
     top: 5px;
-    padding: 0px 45px;
+    padding: 0 45px;
     color: #ff2025;
 }
 
@@ -176,10 +173,7 @@ input:focus ~ .highlight {
     letter-spacing: 1px;
     background: transparent;
     /*border: 1;*/
-    border-bottom: 1px solid #636363;
-    border-top: 1px solid #636363;
-    border-left: 1px solid #636363;
-    border-right: 1px solid #636363;
+    border: 1px solid #636363;
     cursor: pointer;
     border-radius: 3px;
     /*transition: all 0.15s ease;*/

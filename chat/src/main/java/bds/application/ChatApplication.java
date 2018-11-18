@@ -18,7 +18,7 @@ public class ChatApplication {
     // для хранения пар значений <login пользователя> - <id последнего переданного сообщения клиенту> (messages.id)
     // используется для того, чтобы знать после какого messages.id записи нужно передавать клиенту, так как они
     // для него новые
-    static public ConcurrentHashMap<String, Integer> topMessageIdForUser = new ConcurrentHashMap<>();
+    static public final ConcurrentHashMap<String, Integer> topMessageIdForUser = new ConcurrentHashMap<>();
 
     // main
     public static void main(String[] args) {

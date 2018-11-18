@@ -20,11 +20,13 @@ public class MessagesRecord {
     // id пользователя, приславшего сообщение. Связь с таблицей users по полю id
     @NotNull
     @Column(name = "USER_ID", nullable = false)
+    private
     int userId;
 
     // текс сообщения
     @NotNull
     @Column(name = "MESSAGE", nullable = false)
+    private
     String message;
 
     @Override

@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-
 @Controller
 @PropertySource("classpath:/chat.properties")
 @EnableJpaRepositories("bds.dao")
@@ -48,8 +47,6 @@ public class ChatController {
     private String pageTickTime;
 
     private static final Logger LOG = LoggerFactory.getLogger(ChatController.class);
-
-    static private List<UsersRecord> allUsers;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigurer() {
@@ -88,7 +85,7 @@ public class ChatController {
     public String viewChat(Model model) {
 
         // считываем залогиненного пользователя в системе
-        String login = "";
+        String login;
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -137,7 +134,7 @@ public class ChatController {
     @RequestMapping(value = "/sendmessage", method = RequestMethod.POST,
             headers = "Accept=application/json", consumes = "application/json")
     @ResponseBody
-    public String getMessage(@RequestBody final MessageDTO messageDTO) throws Exception {
+    public String getMessage(@RequestBody final MessageDTO messageDTO) {
 
         LOG.info("/sendmessage");
         LOG.info("got object: " + messageDTO.toString());
@@ -146,7 +143,7 @@ public class ChatController {
 
         messagesRecord.setMessage(messageDTO.getMessage());
 
-        allUsers = (List<UsersRecord>) usersRepository.findAll();
+        List<UsersRecord> allUsers = (List<UsersRecord>) usersRepository.findAll();
 
         if (allUsers.size() == 0) {
             ChatController.LOG.info("NO RECORDS");

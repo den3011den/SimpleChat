@@ -42,10 +42,10 @@ $(document).ready(function () {
                     // увеличение счётчика
                     cnt = Number(cnt) + Number(1);
 
-                    var number = Number(cnt);
-                    var nameVar = "block_" + number.toString();
+                    number = Number(cnt);
+                    nameVar = "block_" + number.toString();
 
-                    if (value['login'] == $("#login").val()) { // вывод "своего" сообщения
+                    if (value['login'] === $("#login").val()) { // вывод "своего" сообщения
 
                         $(".messagesDiv").prepend("<div class=" + nameVar.toString() + "><div class='message own-message'><b><em>" + value['login'] + "</em></b><br>" +
                             value['message'] + "</div></div>");
@@ -111,7 +111,7 @@ $(document).ready(function () {
             },
             // запрос клиента к серверу прошёл усвешно
             success: function (jsondata) {
-                if (jsondata.success == "true") {  // серверу удалось принять данные и записать в БД
+                if (jsondata.success === "true") {  // серверу удалось принять данные и записать в БД
                     resetData();
                     $("#postResultDiv").html("<p></p>");
                 }
@@ -125,8 +125,7 @@ $(document).ready(function () {
                     "Не удалось отправить сообщение! Возможно сервер не доступен. <br>" + "</div>");
             }
         });
-    };
-
+    }
     // очишаем поле сообщения (используется если передача сообщения от клиента к серверу прошла полностью успешно)
     function resetData() {
         $("#message").val("");

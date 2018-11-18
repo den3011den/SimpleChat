@@ -21,12 +21,14 @@ public class RolesRecord {
     // наименование роли
     @NotNull
     @Column(name = "name", nullable = false)
+    private
     String name;
 
     @Override
     public String toString() {
         return "RolesRecord{ id=" + id + ", name=" + name + " }";
     }
+
 
     public int getId() {
         return id;

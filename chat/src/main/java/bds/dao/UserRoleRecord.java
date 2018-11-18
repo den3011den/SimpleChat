@@ -21,11 +21,13 @@ public class UserRoleRecord {
     // id пользователя. Связь с таблицей users по полю users.id
     @NotNull
     @Column(name = "USER_ID", nullable = false)
+    private
     int userId;
 
     // id роли. Связь с таблицей roles по полю roles.id
     @NotNull
     @Column(name = "ROLE_ID", nullable = false)
+    private
     int roleId;
 
     @Override

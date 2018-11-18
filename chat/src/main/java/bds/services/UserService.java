@@ -9,7 +9,6 @@ import bds.dao.repo.UserRoleRepository;
 import bds.dao.repo.UsersRepository;
 import org.hibernate.*;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +44,6 @@ public class UserService implements IUserService {
     private SessionFactory sessionFactory;
 
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
-
-    static private List<UsersRecord> allUsers;
 
     @Autowired
     private UsersRepository usersRepository;
@@ -88,16 +85,15 @@ public class UserService implements IUserService {
     }
 
     // проверка на существование логина
-    public boolean loginExists(String login) {
+    private boolean loginExists(String login) {
 
-        allUsers = (List<UsersRecord>) usersRepository.findAll();
+        List<UsersRecord> allUsers = (List<UsersRecord>) usersRepository.findAll();
 
         if (allUsers.size() == 0) {
             return false;
         }
 
-        boolean loginContains = allUsers.contains(new UsersRecord(login));
-        return loginContains;
+        return allUsers.contains(new UsersRecord(login));
     }
 
     // забыть в системе последний номер записи таблицы сообщений клиенту
@@ -112,9 +108,9 @@ public class UserService implements IUserService {
 
     // запомнить в системе id последней отправленной клиенту записи сообщения чата из messages
     // Изпользуется при логине пользователя в систему
-    public int rememberTopMessageIdForUser(String login) {
+    public void rememberTopMessageIdForUser(String login) {
 
-        Integer topId = new Integer(0);
+        Integer topId;
 
         // поиск максимального текущего id сообщения чата в таблице сообщений БД messages
         Session session = sessionFactory.openSession();
@@ -128,17 +124,15 @@ public class UserService implements IUserService {
 
         if (messagesRecord == null) {
             UserService.LOG.info("Messages not found. Max message id for " + login + " is 0");
-            return 0;
+            return;
         }
 
-        topId = (Integer) messagesRecord.getId();
+        topId = messagesRecord.getId();
 
-        if (topId.intValue() > 0) {
+        if (topId > 0) {
             topMessageIdForUser.put(login, topId);
-            UserService.LOG.info("Top message id for " + login + " is " + topId.intValue());
-            return topId.intValue();
+            UserService.LOG.info("Top message id for " + login + " is " + topId);
         }
-        return 0;
     }
 
 

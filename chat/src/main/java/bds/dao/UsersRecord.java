@@ -21,23 +21,22 @@ public class UsersRecord {
     // логин пользователя в системе
     @NotNull
     @Column(name = "LOGIN", nullable = false)
+    private
     String login;
 
     // пароль пользователя в системе в зашифрованом виде
     @NotNull
     @Column(name = "PASSWORD", nullable = false)
+    private
     String password;
 
     public UsersRecord() {
     }
 
-    ;
-
     public UsersRecord(String login) {
         this.login = login;
     }
 
-    ;
 
     @Override
     public String toString() {
